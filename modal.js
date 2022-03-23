@@ -11,7 +11,6 @@ const RegisterSchema = mongoose.Schema({
     },
     email: {
         type: String,
-        require:true
     },
     mobilenumber: {
         type: String,

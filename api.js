@@ -2,15 +2,13 @@ const express = require('express');
 const app = express()
 const User = require('./modal')
 var router = express.Router();
-var bodyParser = require("body-parser");
-app.use(bodyParser.json());
 const fileupload = require('express-fileupload')
 app.use(fileupload)
 const { ObjectId } = require('mongodb')
 var jwt = require('jsonwebtoken');
 var secret = 'bgmi';
 const { uploadimage } = require('./upload')
-app.use(bodyParser.urlencoded({ extended: true })); 
+
 
 router.put('/savepassword', function (req, res) {
     User.findOne({email: req.body.email}).exec(function (err, user) {
@@ -23,27 +21,27 @@ router.put('/savepassword', function (req, res) {
                 if (err) {
                     res.json({ success: false, message: err });
                 } else {
-                    var token = jwt.sign({ email: user.email, id: user._id }, secret, { expiresIn: '24h' });
-                    res.json({ success: true, message: 'Password has been reset!', token: token });
+                    // var token = jwt.sign({ email: user.email, id: user._id }, secret, { expiresIn: '24h' });
+                    res.json({ success: true, message: 'Password has been reset!' });
                 }
             });
         }
     });
 });
 
-router.post('/', uploadimage, (req, res) => {
+router.post('/',uploadimage,(req,res) => {
     console.log("Hello");
-    let data = new User()
+    let data = new  User();
     data.username= req.body.username
-    data.name = req.body.name
-    data.email = req.body.email
-    data.mobilenumber = req.body.mobilenumber
+    data.name = req.body.name,
+    data.email = req.body.email,
+    data.mobilenumber = req.body.mobilenumber,
     data.password = req.body.password
     data.description = req.body.description
     data.quantities = req.body.quantities
     data.price = req.body.price
     data.photo = req.file.filename,
-        data.photo_path = "http://localhost:9900/" + req.file.filename
+     data.photo_path = "http://localhost:9900/" + req.file.filename
     data.save((err) => {
         if (err) {
             console.log(err)
@@ -56,27 +54,29 @@ router.post('/', uploadimage, (req, res) => {
 
 
 router.post('/login', function(req, res){
-    User.findOne({email:req.body.email}).select('email password').exec(function(err, user) {
-        if (err) throw err;
-        else {
-            if (!user) {
-                res.json({ success: false, message: 'email and password not provided !!!' });
-            } else if (user) {
-                if (!req.body.password) {
-                    res.json({ success: false, message: 'No password provided' });
-                } else {
-                    var validPassword = user.comparePassword(req.body.password);
-                    if (!validPassword) {
-                        res.json({ success: false, message: 'Could not authenticate password' });
-                    } else{
-                        //res.send(user);
-                        res.json({ success: true, message: 'User authenticated!'});
-                    }             
-                }
-            }
-        }   
-    });
-});
+            User.findOne({email:req.body.email}).select('email password').exec(function(err, user) {
+                if (err) throw err;
+                else {
+                    if (!user) {
+                        res.json({ success: false, message: 'email and password not provided !!!' });
+                    } else if (user) {
+                        if (!req.body.password) {
+                            res.json({ success: false, message: 'No password provided' });
+                        } else {
+                            // var validPassword = user.comparePassword(req.body.password);
+                            // if (validPassword) {
+                            //     res.json({ success: false, message: 'Could not authenticate password' });
+                            // } else{
+                                // res.send(user);
+                                var token = jwt.sign({ email: user.email, id: user._id }, secret, { expiresIn: '1h' }); 
+
+                                res.json({ success: true, message: 'User authenticated!', token:token });
+                            }             
+                        // }
+                    }
+                }   
+            });
+        })
 
 router.get('/', (req, res) => {
     User.find({}).exec(function (err, user) {
@@ -110,6 +110,7 @@ router.post('/adduser', uploadimage, async (req, res) => {
     data.quantities = req.body.quantities
     data.price = req.body.price
     data.photo = req.file.filename;
+    data.photo_path = "http://localhost:9900/" + req.file.filename
     data.save((err) => {
         if (err) {
             console.log(err)
@@ -128,7 +129,7 @@ router.put('/edit/:id', uploadimage, async (req, res) => {
         else {
             if (req.file == null) {
                 
-                result.name = req.body.name,s
+                result.name = req.body.name
                 result.description = req.body.description
                 result.quantities = req.body.quantities
                 result.price = req.body.price

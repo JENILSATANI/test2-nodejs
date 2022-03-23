@@ -5,12 +5,13 @@ const db = 'mongodb+srv://jenilsatani:jenilsatani123@cluster0.d2ai8.mongodb.net/
 mongoose.connect(db).then(() => {
     console.log(`connected successfully`);
 }).catch((err) => console.log(`not succesflly`))
-
+var bodyParser = require("body-parser");
 const cors = require('cors')
 // const corsOptions = {
 //     origin: '*'
 // }
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(cors())
 const userUpload = require('./api')
 app.use('/', express.static('public'))
