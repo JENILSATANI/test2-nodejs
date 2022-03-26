@@ -145,9 +145,9 @@ router.use(function (req, res, next) {
     }
 });
 
-router.get('/', (req, res) => {
+router.get('/users', (req, res) => {
     console.log("deedddcode", req.decoded)
-    Person.findById(ObjectId(req.decoded.id)).exec(function (err, user) {
+    Person.find({}).exec(function (err, user) {
         if (err) throw err;
         if (!user) {
             res.json({ success: fale, message: 'User not found' });
@@ -159,7 +159,7 @@ router.get('/', (req, res) => {
 
 router.get('/user', (req, res) => {
     console.log("deedddcode", req.decoded)
-    Person.find({}).exec(function (err, user) {
+    Person.findById(ObjectId(req.decoded.id)).exec(function (err, user) {
         if (err) throw err;
         if (!user) {
             res.json({ success: fale, message: 'User not found' });
