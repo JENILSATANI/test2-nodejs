@@ -39,7 +39,7 @@ router.post('/per', uploadimage, (req, res) => {
         data.mobilenumber = req.body.mobilenumber,
         data.password = req.body.password
     data.photo = req.file.filename,
-        data.photo_path = "http://localhost:9900/" + req.file.filename
+        data.photo_path = "https://medicinesinfo.herokuapp.com/" + req.file.filename
     data.save((err) => {
         if (err) {
             console.log(err)
@@ -76,7 +76,7 @@ router.post('/', uploadimage, (req, res) => {
     data.quantities = req.body.quantities
     data.price = req.body.price
     data.photo = req.file.filename,
-        data.photo_path = "http://localhost:9900/" + req.file.filename
+        data.photo_path = "https://medicinesinfo.herokuapp.com/" + req.file.filename
     data.save((err) => {
         if (err) {
             console.log(err)
@@ -93,7 +93,7 @@ router.post('/adduser', uploadimage, async (req, res) => {
     data.quantities = req.body.quantities
     data.price = req.body.price
     data.photo = req.file.filename;
-    data.photo_path = "http://localhost:9900/" + req.file.filename
+    data.photo_path = "https://medicinesinfo.herokuapp.com/" + req.file.filename
     data.save((err) => {
         if (err) {
             console.log(err)
@@ -235,7 +235,7 @@ Person.findById(ObjectId(req.decoded.id)).exec((err, result) => {
         result.email = req.body.email
         result.mobilenumber = req.body.mobilenumber
         result.photo = req.file.filename;
-        result.photo_path = "http://localhost:9900/" + req.file.filename;
+        result.photo_path = "https://medicinesinfo.herokuapp.com/" + req.file.filename;
         result.save()
         res.json({ success: "true", message: "done" })
           result.save(function(err){
@@ -272,7 +272,7 @@ router.put('/edit/:id', uploadimage, async (req, res) => {
                 result.quantities = req.body.quantities
                 result.price = req.body.price
                 result.photo = req.file.filename;
-                result.photo_path = "http://localhost:9900/" + req.file.filename;
+                result.photo_path = "https://medicinesinfo.herokuapp.com/" + req.file.filename;
 
                 result.save(function (err) {
                     if (err) {
