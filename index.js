@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-var port = process.env.PORT || 9900;
+var PORT = process.env.PORT || 9900;
 const mongoose = require('mongoose')
 const db = 'mongodb+srv://jenilsatani:jenilsatani123@cluster0.d2ai8.mongodb.net/upload?retryWrites=true&w=majority'
 mongoose.connect(db).then(() => {
@@ -18,4 +18,4 @@ const userUpload = require('./api')
 app.use('/', express.static('public'))
 app.use('/', userUpload);    
 
-app.listen(port , ()=>{console.log('be success')})
+app.listen(PORT , ()=>{console.log('be success',PORT)})

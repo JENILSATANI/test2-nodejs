@@ -85,6 +85,23 @@ router.post('/', uploadimage, (req, res) => {
     res.json({ success: true, message: "register success" });
 }
 )
+router.post('/adduser', uploadimage, async (req, res) => {
+    console.log("Hello");
+    let data = new User()
+    data.name = req.body.name
+    data.description = req.body.description
+    data.quantities = req.body.quantities
+    data.price = req.body.price
+    data.photo = req.file.filename;
+    data.photo_path = "http://localhost:9900/" + req.file.filename
+    data.save((err) => {
+        if (err) {
+            console.log(err)
+        }
+    })
+    res.send(req.body);
+}
+)
 
 router.get('/ML', (req, res) => {
     console.log("deedddcode", req.decoded)
@@ -183,23 +200,6 @@ router.get('/get/:id', (req, res) => {
         })
 })
 
-router.post('/adduser', uploadimage, async (req, res) => {
-    console.log("Hello");
-    let data = new User()
-    data.name = req.body.name
-    data.description = req.body.description
-    data.quantities = req.body.quantities
-    data.price = req.body.price
-    data.photo = req.file.filename;
-    data.photo_path = "http://localhost:9900/" + req.file.filename
-    data.save((err) => {
-        if (err) {
-            console.log(err)
-        }
-    })
-    res.send(req.body);
-}
-)
 
 
 // router.put('/user', uploadimage, async (req, res) => {
