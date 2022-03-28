@@ -202,10 +202,35 @@ router.post('/adduser', uploadimage, async (req, res) => {
 )
 
 
-router.put('/user', uploadimage, async (req, res) => {
-    console.log("past____-", req.decoded);
-    Person.findById(ObjectId(req.decoded.id)).exec((err, result) => {
+// router.put('/user', uploadimage, async (req, res) => {
+//     console.log("past____-", req.decoded);
+//     Person.findById(ObjectId(req.decoded.id)).exec((err, result) => {
 
+//         result.username = req.body.username
+//         result.email = req.body.email
+//         result.mobilenumber = req.body.mobilenumber
+//         result.photo = req.file.filename;
+//         result.photo_path = "http://localhost:9900/" + req.file.filename;
+//         result.save()
+//         res.json({ success: "true", message: "done" })
+//     })
+// })
+
+router.put('/user', uploadimage, async (req, res) => {
+    console.log("past____-", req.body);
+Person.findById(ObjectId(req.decoded.id)).exec((err, result) => {
+    if(err) {
+        console.log(err)
+    } 
+    else {
+        if(req.file == null) {
+            result.username = req.body.username
+            result.email = req.body.email
+            result.mobilenumber = req.body.mobilenumber
+            result.save()
+            res.send()
+        }
+      else{
         result.username = req.body.username
         result.email = req.body.email
         result.mobilenumber = req.body.mobilenumber
@@ -213,7 +238,17 @@ router.put('/user', uploadimage, async (req, res) => {
         result.photo_path = "http://localhost:9900/" + req.file.filename;
         result.save()
         res.json({ success: "true", message: "done" })
-    })
+          result.save(function(err){
+              if(err){
+                  console.log(err);
+              }
+          }); 
+          res.send("update")
+      }
+    }
+})
+
+
 })
 router.put('/edit/:id', uploadimage, async (req, res) => {
     console.log("past____-", req.body);
