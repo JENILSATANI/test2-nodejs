@@ -213,7 +213,7 @@ router.get('/get/:id', (req, res) => {
 //         result.photo_path = "http://localhost:9900/" + req.file.filename;
 //         result.save()
 //         res.json({ success: "true", message: "done" })
-//     })
+//     })   
 // })
 
 router.put('/user', uploadimage, async (req, res) => {
