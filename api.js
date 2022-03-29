@@ -130,16 +130,16 @@ router.post('/login', function (req, res) {
                 if (!req.body.password) {
                     res.json({ success: false, message: 'No password provided' });
                 } else {
-                    // var validPassword = user.comparePassword(req.body.password);
-                    // if (validPassword) {
-                    //     res.json({ success: false, message: 'Could not authenticate password' });
-                    // } else{
+                    var validPassword = user.comparePassword(req.body.password);
+                    if (validPassword) {
+                        res.json({ success: false, message: 'Could not authenticate password' });
+                    } else{
                     // res.send(user);
                     var token = jwt.sign({ email: user.email, id: user._id }, secret, { expiresIn: '1h' });
 
                     res.json({ success: true, message: 'User authenticated!', token: token });
                 }
-                // }
+                }
             }
         }
     });
