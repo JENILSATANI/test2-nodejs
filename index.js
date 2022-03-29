@@ -8,12 +8,12 @@ mongoose.connect(db).then(() => {
 }).catch((err) => console.log(`not succesflly`))
 var bodyParser = require("body-parser");
 const cors = require('cors')
-// const corsOptions = {
-//     origin: '*'
-// }
+const corsOptions = {
+    origin: '*'
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false })); 
-app.use(cors())
+app.use(cors(corsOptions))
 const userUpload = require('./api')
 app.use('/', express.static('public'))
 app.use('/', userUpload);    
