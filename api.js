@@ -191,7 +191,7 @@ router.get('/get/:id', (req, res) => {
     User.findById(ObjectId(id))
         .exec(function (err, result) {
             if (err) {
-                // console.log("err", err)
+                console.log("err", err)
             } else {
                 res.status(200).json({
                     data: result, success: true
