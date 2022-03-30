@@ -144,6 +144,30 @@ router.post('/login', function (req, res) {
         }
     });
 })
+router.post('/otp', function (req, res) {
+    Person.findOne({ mobilenumber: req.body.mobilenumber }).select('mobilenumber password').exec(function (err, user) {
+        if (err) throw err;
+        else {
+            if (!user) {
+                res.json({ success: false, message: 'mobilenumber and password not provided !!!' });
+            } else if (user) {
+                if (!req.body.password) {
+                    res.json({ success: false, message: 'No password provided' });
+                } else {
+                    var validPassword = user.comparePassword(req.body.password);
+                    if (!validPassword) {
+                        res.json({ success: false, message: 'Please Enter Right Password' });
+                    } else{
+                    // res.send(user);
+                    var token = jwt.sign({ email: user.email, id: user._id }, secret, { expiresIn: '1h' });
+
+                    res.json({ success: true, message: 'User authenticated!', token: token });
+                }
+                }
+            }
+        }
+    });
+})
 
 router.use(function (req, res, next) {
 
