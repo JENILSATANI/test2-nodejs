@@ -12,7 +12,7 @@ const Person = require('./model.js/user')
 const config = require('./config');
 const client = require('twilio')(config.accountID, config.authToken)
 const { OAuth2Client } = require('google-auth-library')
-CLIENT_ID = "632665382854-uab0h1a4rva0ji229278484sopsiks5e.apps.googleusercontent.com"
+CLIENT_ID = "632665382854-f7mjmj6m7cjdsnucjcfl7d8dugdcs5tp.apps.googleusercontent.com"
 const clientp = new OAuth2Client(CLIENT_ID)
 
 router.post("/google", async (req, res) => {
