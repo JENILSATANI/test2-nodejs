@@ -29,15 +29,12 @@ const RegisterSchema = mongoose.Schema({
     },
     description: {
         type: String,
-        require: true
     },
     quantities: {
         type: String,
-        require: true
     },
     price: {
         type: String,
-        require: true
     },
 
 })
