@@ -11,9 +11,9 @@ const cors = require('cors')
 const corsOptions = {
     origin: '*'
 }
+app.use(cors(corsOptions))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false })); 
-app.use(cors(corsOptions))
 const userUpload = require('./api')
 app.use('/', express.static('public'))
 app.use('/', userUpload);    
