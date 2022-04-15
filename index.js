@@ -11,7 +11,7 @@ var bodyParser = require("body-parser");
 // const corsOptions = {
 //     origin: '*'
 // }
-app.use(cors({origin:"https://medicineplus.herokuapp.com"}))
+app.use(cors({origin:"https://medicinesinfo.herokuapp.com/"}))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false })); 
 const userUpload = require('./api')
