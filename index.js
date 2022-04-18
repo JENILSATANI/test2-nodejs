@@ -17,22 +17,7 @@ app.use(function (request, response, next) {
   response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
-  });
-  
-  
-  app.get('/', function(req, res) {   
-  redis.get('foo', function(err, value){
-      res.render('index', { title: 'My App', Order: value }); 
-      console.log(value); 
-  });
-  });
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false })); 
 const userUpload = require('./api')
